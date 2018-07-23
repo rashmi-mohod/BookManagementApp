@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{selectedCategory}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-searchbar
+    [(ngModel)]="myInput"
+    [showCancelButton]="shouldShowCancel"
+    (ionInput)="onInput($event)"
+    (ionCancel)="onCancel($event)">
+  </ion-searchbar>
+  <ion-grid>
+      <ion-row>
+        <ion-col col-4  *ngFor="let item of filteredList" 
+        (click)="itemTapped($event, item)" 
+        (error)="redirectNextUrl($event, item)">
+          <ion-card >
+          <img class="full-image" src={{item.images}} >
+              <ion-card-content>
+                <ion-card-title>
+                  {{item.title}}
+                  </ion-card-title>
+                <p>
+                  {{item.author}}
+                </p>
+              </ion-card-content>
+            </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  
+</ion-content>
